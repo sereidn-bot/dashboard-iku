@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capaian IKU 2021–2024 | Ditrenbang Unand</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green-dark: #1e4d2b;
+  --green-main: #2e7d45;
+  --green-light: #e8f5ec;
+  --yellow: #f0c030;
+  --blue: #1a56db;
+  --orange: #d04a00;
+  --gray-0: #ffffff;
+  --gray-1: #f7f8f7;
+  --gray-2: #eef0ee;
+  --gray-4: #9aaa9a;
+  --gray-5: #5a6a5a;
+  --text: #1a231a;
+}
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--gray-1);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TOPBAR */
+.topbar {
+  background: var(--green-dark);
+  padding: 0 24px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.topbar-left { display: flex; align-items: center; gap: 10px; }
+.topbar-logo {
+  width: 28px; height: 28px;
+  background: var(--yellow);
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: var(--green-dark);
+}
+.topbar-name { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.9); }
+.topbar-sub  { font-size: 12px; color: rgba(255,255,255,.45); }
+
+/* LAYOUT */
+.layout { display: flex; flex: 1; min-height: 0; }
+
+/* SIDEBAR */
+.sidebar {
+  width: 185px; flex-shrink: 0;
+  background: var(--gray-0);
+  border-right: 1px solid var(--gray-2);
+  padding: 20px 10px;
+}
+.sidebar-label {
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--gray-4); padding: 0 8px; margin-bottom: 10px;
+}
+.iku-btn {
+  width: 100%; display: flex; align-items: center; gap: 9px;
+  padding: 9px 8px; border-radius: 8px;
+  border: none; background: transparent;
+  cursor: pointer; text-align: left;
+  font-family: 'Outfit', sans-serif;
+  margin-bottom: 3px; transition: background .18s;
+}
+.iku-btn:hover { background: var(--green-light); }
+.iku-btn.active { background: var(--green-dark); }
+.iku-num {
+  width: 28px; height: 28px; border-radius: 7px;
+  background: var(--gray-2); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--gray-5);
+  font-family: 'JetBrains Mono', monospace;
+  transition: background .18s, color .18s;
+}
+.iku-btn.active .iku-num { background: var(--yellow); color: var(--green-dark); }
+.iku-txt { font-size: 13px; font-weight: 500; color: var(--gray-5); flex: 1; transition: color .18s; }
+.iku-btn.active .iku-txt { color: #fff; font-weight: 600; }
+.iku-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.dot-ok { background: #22c55e; }
+.dot-no { background: #ef4444; }
+
+/* MAIN */
+.main {
+  flex: 1; padding: 26px 28px;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 18px;
+}
+
+/* PANEL */
+.panel { display: none; flex-direction: column; gap: 18px; animation: fadeUp .22s ease; }
+.panel.active { display: flex; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* PANEL HEAD */
+.ph { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.ph-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.ph-desc  { font-size: 12px; color: var(--gray-4); line-height: 1.55; max-width: 540px; }
+.badge { flex-shrink: 0; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.badge-ok { background: #dcfce7; color: #15803d; }
+.badge-no { background: #fee2e2; color: #b91c1c; }
+
+/* STATS */
+.stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+.sc {
+  background: var(--gray-0); border-radius: 12px;
+  padding: 15px 17px; border: 1px solid var(--gray-2);
+  border-top: 3px solid;
+}
+.sc-blue   { border-top-color: var(--blue); }
+.sc-orange { border-top-color: var(--orange); }
+.sc-green  { border-top-color: var(--green-main); }
+.sc-yellow { border-top-color: var(--yellow); }
+.sc-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-4); margin-bottom: 7px; }
+.sc-val { font-size: 26px; font-weight: 700; font-family: 'JetBrains Mono', monospace; line-height: 1; }
+.sc-val-sm { font-size: 19px; }
+.sc-sub { font-size: 11px; color: var(--gray-4); margin-top: 3px; }
+
+/* CHART */
+.chart-box {
+  background: var(--gray-0); border-radius: 12px;
+  border: 1px solid var(--gray-2); padding: 20px 22px;
+}
+.chart-head {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+}
+.chart-head h3 { font-size: 13px; font-weight: 600; }
+.legend { display: flex; gap: 14px; }
+.leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--gray-5); font-weight: 500; }
+.leg-line { width: 16px; height: 2.5px; border-radius: 2px; background: var(--blue); }
+.leg-dash {
+  width: 16px; height: 2.5px;
+  background: repeating-linear-gradient(to right, var(--orange) 0, var(--orange) 4px, transparent 4px, transparent 7px);
+}
+.chart-wrap { position: relative; height: 265px; }
+
+/* TABLE */
+.table-box {
+  background: var(--gray-0); border-radius: 12px;
+  border: 1px solid var(--gray-2); overflow: hidden;
+}
+.table-title { padding: 13px 18px; border-bottom: 1px solid var(--gray-2); font-size: 13px; font-weight: 600; }
+table { width: 100%; border-collapse: collapse; }
+thead tr { background: var(--gray-1); }
+th {
+  padding: 9px 16px; text-align: left;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--gray-4);
+  border-bottom: 1px solid var(--gray-2);
+}
+tbody tr { border-bottom: 1px solid var(--gray-2); transition: background .12s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--gray-1); }
+td { padding: 11px 16px; font-size: 13px; }
+.td-y { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--gray-5); }
+.td-c { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--blue); }
+.td-t { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--orange); }
+.td-p { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.tag { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+.tag-ok { background: #dcfce7; color: #15803d; }
+.tag-no { background: #fee2e2; color: #b91c1c; }
+
+@media (max-width: 768px) {
+  .sidebar { width: 54px; }
+  .sidebar-label, .iku-txt, .iku-dot { display: none; }
+  .iku-btn { justify-content: center; }
+  .main { padding: 14px 12px; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .ph { flex-direction: column; }
+  .topbar-sub { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-logo">U</div>
+    <span class="topbar-name">Ditrenbang &middot; Universitas Andalas</span>
+  </div>
+  <div class="topbar-sub">Dashboard Capaian IKU 2021&ndash;2024</div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-label">Indikator</div>
+    <div id="sidebar"></div>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+
+<script>
+const YEARS = [2021, 2022, 2023, 2024];
+const DATA = [
+  { id:1, desc:"Persentase lulusan S1 dan D4/D3/D2 yang berhasil mendapat pekerjaan; melanjutkan studi; atau menjadi wiraswasta", c:[10.75,52.27,66.68,60.8], t:[80,60,80,80] },
+  { id:2, desc:"Persentase mahasiswa yang menghabiskan paling sedikit 20 SKS di luar kampus", c:[1.33,18.92,4.22,8.35], t:[30,25,40,40] },
+  { id:3, desc:"Persentase dosen yang berkegiatan tri dharma di kampus lain, bekerja sebagai praktisi industri, atau membina mahasiswa berprestasi", c:[7.72,20.49,40.6,59.85], t:[20,30,30,32.1] },
+  { id:4, desc:"Persentase program studi yang melaksanakan kerja sama dengan mitra", c:[38.35,49.91,5.09,6.6], t:[40,50,25,25] },
+  { id:5, desc:"Jumlah keluaran penelitian dan pengabdian masyarakat yang mendapat rekognisi internasional atau diterapkan masyarakat per jumlah dosen", c:[2.76,7.60,7.26,4.81], t:[0.5,1,1,6] },
+  { id:6, desc:"Persentase program studi S1 dan D4/D3/D2 yang memiliki akreditasi atau sertifikasi internasional yang diakui pemerintah", c:[0.35,0.92,0.95,2], t:[0.5,0.5,0.7,2.60] },
+  { id:7, desc:"Jumlah mahasiswa berprestasi di tingkat nasional dan internasional per jumlah mahasiswa", c:[18.7,29.21,22,15.33], t:[35,50,50,58.1] },
+  { id:8, desc:"Persentase dosen dengan pendidikan S3, sertifikasi kompetensi/profesi yang diakui industri, atau berasal dari kalangan praktisi profesional", c:[34.62,28,21.57,31], t:[8,5,10,33.33] }
+];
+
+function pct(c,t){ return t ? ((c/t)*100).toFixed(1)+'%' : '—'; }
+function isOk(c,t){ return c >= t; }
+function avg(a){ return (a.reduce((x,y)=>x+y,0)/a.length).toFixed(1); }
+
+const charts = {};
+const sidebarEl = document.getElementById('sidebar');
+const mainEl = document.getElementById('main');
+
+DATA.forEach(d => {
+  const c4=d.c[3], t4=d.t[3], good=isOk(c4,t4);
+
+  // Sidebar button
+  const btn = document.createElement('button');
+  btn.className = 'iku-btn';
+  btn.id = 'btn-'+d.id;
+  btn.innerHTML = `
+    <div class="iku-num">${d.id}</div>
+    <div class="iku-txt">IKU ${d.id}</div>
+    <div class="iku-dot ${good?'dot-ok':'dot-no'}"></div>
+  `;
+  btn.onclick = () => select(d.id);
+  sidebarEl.appendChild(btn);
+
+  // Table rows
+  const rows = YEARS.map((y,i) => {
+    const c=d.c[i], t=d.t[i], g=isOk(c,t);
+    return `<tr>
+      <td class="td-y">${y}</td>
+      <td class="td-c">${c}</td>
+      <td class="td-t">${t}</td>
+      <td class="td-p">${pct(c,t)}</td>
+      <td><span class="tag ${g?'tag-ok':'tag-no'}">${g?'✓ Tercapai':'✗ Belum Tercapai'}</span></td>
+    </tr>`;
+  }).join('');
+
+  // Panel
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+  panel.id = 'panel-'+d.id;
+  panel.innerHTML = `
+    <div class="ph">
+      <div>
+        <div class="ph-title">IKU ${d.id}</div>
+        <div class="ph-desc">${d.desc}</div>
+      </div>
+      <div class="badge ${good?'badge-ok':'badge-no'}">
+        ${good?'✓ Target 2024 Tercapai':'✗ Target 2024 Belum Tercapai'}
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="sc sc-blue">
+        <div class="sc-lbl">Capaian 2024</div>
+        <div class="sc-val">${c4}</div>
+        <div class="sc-sub">Nilai realisasi</div>
+      </div>
+      <div class="sc sc-orange">
+        <div class="sc-lbl">Target 2024</div>
+        <div class="sc-val">${t4}</div>
+        <div class="sc-sub">Nilai ditetapkan</div>
+      </div>
+      <div class="sc sc-green">
+        <div class="sc-lbl">% Capaian 2024</div>
+        <div class="sc-val sc-val-sm" style="color:${good?'#15803d':'#b91c1c'}">${pct(c4,t4)}</div>
+        <div class="sc-sub">dari target</div>
+      </div>
+      <div class="sc sc-yellow">
+        <div class="sc-lbl">Rata-rata 2021–2024</div>
+        <div class="sc-val sc-val-sm">${avg(d.c)}</div>
+        <div class="sc-sub">capaian</div>
+      </div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-head">
+        <h3>Grafik Capaian vs Target (2021–2024)</h3>
+        <div class="legend">
+          <div class="leg"><div class="leg-line"></div>Capaian</div>
+          <div class="leg"><div class="leg-dash"></div>Target</div>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="canvas-${d.id}"></canvas>
+      </div>
+    </div>
+
+    <div class="table-box">
+      <div class="table-title">Data Lengkap Per Tahun</div>
+      <table>
+        <thead><tr>
+          <th>Tahun</th><th>Capaian</th><th>Target</th>
+          <th>% Capaian</th><th>Status</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+  mainEl.appendChild(panel);
+});
+
+// Build charts
+requestAnimationFrame(() => {
+  DATA.forEach(d => {
+    const el = document.getElementById('canvas-'+d.id);
+    if (!el) return;
+    charts[d.id] = new Chart(el.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: YEARS,
+        datasets: [
+          {
+            label: 'Capaian', data: d.c,
+            borderColor: '#1a56db', backgroundColor: 'rgba(26,86,219,.07)',
+            borderWidth: 2.5, pointRadius: 5, pointHoverRadius: 7,
+            pointBackgroundColor: '#fff', pointBorderColor: '#1a56db',
+            pointBorderWidth: 2.5, tension: 0.3, fill: true
+          },
+          {
+            label: 'Target', data: d.t,
+            borderColor: '#d04a00', backgroundColor: 'transparent',
+            borderWidth: 2, borderDash: [6,4],
+            pointRadius: 4, pointHoverRadius: 6,
+            pointBackgroundColor: '#fff', pointBorderColor: '#d04a00',
+            pointBorderWidth: 2, tension: 0.3, fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a231a', titleColor: '#fff',
+            bodyColor: 'rgba(255,255,255,.7)',
+            padding: 11, cornerRadius: 9,
+            titleFont: { family: 'Outfit', weight: '600', size: 12 },
+            bodyFont:  { family: 'JetBrains Mono', size: 11 },
+            callbacks: { label: c => `  ${c.dataset.label}: ${c.parsed.y}` }
+          }
+        },
+        scales: {
+          x: { grid: { color: '#eef0ee' }, ticks: { font: { family: 'JetBrains Mono', size: 11 }, color: '#9aaa9a' } },
+          y: { grid: { color: '#eef0ee' }, ticks: { font: { family: 'JetBrains Mono', size: 11 }, color: '#9aaa9a' }, beginAtZero: true }
+        }
+      }
+    });
+  });
+  select(1);
+});
+
+function select(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.iku-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.getElementById('btn-'+id).classList.add('active');
+  if (charts[id]) charts[id].resize();
+  mainEl.scrollTop = 0;
+}
+</script>
+</body>
+</html>
