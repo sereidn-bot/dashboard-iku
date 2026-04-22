@@ -22,20 +22,22 @@
   --gray-5: #5a6a5a;
   --text: #1a231a;
 }
-body {
+html, body {
   font-family: 'Outfit', sans-serif;
   background: var(--gray-1);
   color: var(--text);
-  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+  margin: 0; padding: 0;
   display: flex;
   flex-direction: column;
 }
 
-/* TOPBAR */
+/* ── TOPBAR ── */
 .topbar {
   background: var(--green-dark);
-  padding: 0 24px;
-  height: 52px;
+  padding: 0 20px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,24 +45,53 @@ body {
 }
 .topbar-left { display: flex; align-items: center; gap: 10px; }
 .topbar-logo {
-  width: 28px; height: 28px;
-  background: var(--yellow);
-  border-radius: 7px;
+  width: 26px; height: 26px;
+  background: var(--yellow); border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 800; color: var(--green-dark);
+  font-size: 12px; font-weight: 800; color: var(--green-dark);
+  flex-shrink: 0;
 }
-.topbar-name { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.9); }
-.topbar-sub  { font-size: 12px; color: rgba(255,255,255,.45); }
+.topbar-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.9); }
+.topbar-sub  { font-size: 11px; color: rgba(255,255,255,.45); }
 
-/* LAYOUT */
-.layout { display: flex; flex: 1; min-height: 0; }
+/* ── MOBILE IKU SELECTOR ── */
+.mobile-select-wrap {
+  display: none;
+  background: var(--gray-0);
+  border-bottom: 1px solid var(--gray-2);
+  padding: 10px 14px;
+  position: sticky; top: 0; z-index: 50;
+}
+.mobile-select {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--gray-2);
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--green-dark);
+  background: var(--gray-0);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231e4d2b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+}
 
-/* SIDEBAR */
+/* ── LAYOUT ── */
+.layout {
+  display: flex; flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── SIDEBAR (desktop) ── */
 .sidebar {
-  width: 185px; flex-shrink: 0;
+  width: 180px; flex-shrink: 0;
   background: var(--gray-0);
   border-right: 1px solid var(--gray-2);
-  padding: 20px 10px;
+  padding: 18px 8px;
+  overflow-y: auto;
 }
 .sidebar-label {
   font-size: 10px; font-weight: 700;
@@ -68,7 +99,7 @@ body {
   color: var(--gray-4); padding: 0 8px; margin-bottom: 10px;
 }
 .iku-btn {
-  width: 100%; display: flex; align-items: center; gap: 9px;
+  width: 100%; display: flex; align-items: center; gap: 8px;
   padding: 9px 8px; border-radius: 8px;
   border: none; background: transparent;
   cursor: pointer; text-align: left;
@@ -92,52 +123,53 @@ body {
 .dot-ok { background: #22c55e; }
 .dot-no { background: #ef4444; }
 
-/* MAIN */
+/* ── MAIN ── */
 .main {
-  flex: 1; padding: 26px 28px;
+  flex: 1; padding: 22px 24px;
   overflow-y: auto;
-  display: flex; flex-direction: column; gap: 18px;
+  display: flex; flex-direction: column; gap: 16px;
 }
 
-/* PANEL */
-.panel { display: none; flex-direction: column; gap: 18px; animation: fadeUp .22s ease; }
+/* ── PANEL ── */
+.panel { display: none; flex-direction: column; gap: 16px; animation: fadeUp .22s ease; }
 .panel.active { display: flex; }
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(7px); }
+  from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: none; }
 }
 
-/* PANEL HEAD */
-.ph { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+/* ── PANEL HEAD ── */
+.ph { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .ph-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-.ph-desc  { font-size: 12px; color: var(--gray-4); line-height: 1.55; max-width: 540px; }
-.badge { flex-shrink: 0; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.ph-desc  { font-size: 12px; color: var(--gray-4); line-height: 1.55; }
+.badge { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; font-size: 12px; font-weight: 700; white-space: nowrap; }
 .badge-ok { background: #dcfce7; color: #15803d; }
 .badge-no { background: #fee2e2; color: #b91c1c; }
 
-/* STATS */
-.stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+/* ── STATS ── */
+.stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
 .sc {
   background: var(--gray-0); border-radius: 12px;
-  padding: 15px 17px; border: 1px solid var(--gray-2);
+  padding: 14px 15px; border: 1px solid var(--gray-2);
   border-top: 3px solid;
 }
 .sc-blue   { border-top-color: var(--blue); }
 .sc-orange { border-top-color: var(--orange); }
 .sc-green  { border-top-color: var(--green-main); }
 .sc-yellow { border-top-color: var(--yellow); }
-.sc-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-4); margin-bottom: 7px; }
-.sc-val { font-size: 26px; font-weight: 700; font-family: 'JetBrains Mono', monospace; line-height: 1; }
-.sc-val-sm { font-size: 19px; }
+.sc-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-4); margin-bottom: 6px; }
+.sc-val { font-size: 24px; font-weight: 700; font-family: 'JetBrains Mono', monospace; line-height: 1; }
+.sc-val-sm { font-size: 18px; }
 .sc-sub { font-size: 11px; color: var(--gray-4); margin-top: 3px; }
 
-/* CHART */
+/* ── CHART ── */
 .chart-box {
   background: var(--gray-0); border-radius: 12px;
-  border: 1px solid var(--gray-2); padding: 20px 22px;
+  border: 1px solid var(--gray-2); padding: 18px 20px;
 }
 .chart-head {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;
+  flex-wrap: wrap; gap: 8px;
 }
 .chart-head h3 { font-size: 13px; font-weight: 600; }
 .legend { display: flex; gap: 14px; }
@@ -147,18 +179,19 @@ body {
   width: 16px; height: 2.5px;
   background: repeating-linear-gradient(to right, var(--orange) 0, var(--orange) 4px, transparent 4px, transparent 7px);
 }
-.chart-wrap { position: relative; height: 265px; }
+.chart-wrap { position: relative; height: 240px; }
 
-/* TABLE */
+/* ── TABLE ── */
 .table-box {
   background: var(--gray-0); border-radius: 12px;
   border: 1px solid var(--gray-2); overflow: hidden;
 }
-.table-title { padding: 13px 18px; border-bottom: 1px solid var(--gray-2); font-size: 13px; font-weight: 600; }
-table { width: 100%; border-collapse: collapse; }
+.table-title { padding: 12px 16px; border-bottom: 1px solid var(--gray-2); font-size: 13px; font-weight: 600; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 400px; }
 thead tr { background: var(--gray-1); }
 th {
-  padding: 9px 16px; text-align: left;
+  padding: 9px 14px; text-align: left;
   font-size: 10px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 1px; color: var(--gray-4);
   border-bottom: 1px solid var(--gray-2);
@@ -166,7 +199,7 @@ th {
 tbody tr { border-bottom: 1px solid var(--gray-2); transition: background .12s; }
 tbody tr:last-child { border-bottom: none; }
 tbody tr:hover { background: var(--gray-1); }
-td { padding: 11px 16px; font-size: 13px; }
+td { padding: 10px 14px; font-size: 13px; }
 .td-y { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--gray-5); }
 .td-c { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--blue); }
 .td-t { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--orange); }
@@ -175,14 +208,37 @@ td { padding: 11px 16px; font-size: 13px; }
 .tag-ok { background: #dcfce7; color: #15803d; }
 .tag-no { background: #fee2e2; color: #b91c1c; }
 
-@media (max-width: 768px) {
-  .sidebar { width: 54px; }
-  .sidebar-label, .iku-txt, .iku-dot { display: none; }
-  .iku-btn { justify-content: center; }
-  .main { padding: 14px 12px; }
-  .stats { grid-template-columns: 1fr 1fr; }
-  .ph { flex-direction: column; }
+/* ── RESPONSIVE TABLET ── */
+@media (max-width: 900px) {
+  .stats { grid-template-columns: repeat(2,1fr); }
+}
+
+/* ── RESPONSIVE MOBILE ── */
+@media (max-width: 640px) {
+  /* Sembunyikan sidebar, tampilkan dropdown */
+  .sidebar { display: none; }
+  .mobile-select-wrap { display: block; }
   .topbar-sub { display: none; }
+  .topbar-name { font-size: 12px; }
+
+  .layout { overflow-y: auto; }
+  .main {
+    padding: 14px 12px;
+    overflow-y: visible;
+    flex: none;
+  }
+
+  .ph { flex-direction: column; gap: 10px; }
+  .ph-title { font-size: 18px; }
+  .badge { align-self: flex-start; }
+
+  .stats { grid-template-columns: repeat(2,1fr); gap: 8px; }
+  .sc { padding: 12px 12px; }
+  .sc-val { font-size: 20px; }
+  .sc-val-sm { font-size: 16px; }
+
+  .chart-wrap { height: 200px; }
+  .chart-head h3 { font-size: 12px; }
 }
 </style>
 </head>
@@ -194,6 +250,12 @@ td { padding: 11px 16px; font-size: 13px; }
     <span class="topbar-name">Ditrenbang &middot; Universitas Andalas</span>
   </div>
   <div class="topbar-sub">Dashboard Capaian IKU 2021&ndash;2024</div>
+</div>
+
+<!-- Mobile dropdown -->
+<div class="mobile-select-wrap">
+  <select class="mobile-select" id="mobile-select" onchange="select(parseInt(this.value))">
+  </select>
 </div>
 
 <div class="layout">
@@ -224,6 +286,7 @@ function avg(a){ return (a.reduce((x,y)=>x+y,0)/a.length).toFixed(1); }
 const charts = {};
 const sidebarEl = document.getElementById('sidebar');
 const mainEl = document.getElementById('main');
+const mobileSelect = document.getElementById('mobile-select');
 
 DATA.forEach(d => {
   const c4=d.c[3], t4=d.t[3], good=isOk(c4,t4);
@@ -240,6 +303,12 @@ DATA.forEach(d => {
   btn.onclick = () => select(d.id);
   sidebarEl.appendChild(btn);
 
+  // Mobile dropdown option
+  const opt = document.createElement('option');
+  opt.value = d.id;
+  opt.textContent = `IKU ${d.id} — ${good ? '✓' : '✗'} ${good ? 'Tercapai' : 'Belum Tercapai'}`;
+  mobileSelect.appendChild(opt);
+
   // Table rows
   const rows = YEARS.map((y,i) => {
     const c=d.c[i], t=d.t[i], g=isOk(c,t);
@@ -248,7 +317,7 @@ DATA.forEach(d => {
       <td class="td-c">${c}</td>
       <td class="td-t">${t}</td>
       <td class="td-p">${pct(c,t)}</td>
-      <td><span class="tag ${g?'tag-ok':'tag-no'}">${g?'✓ Tercapai':'✗ Belum Tercapai'}</span></td>
+      <td><span class="tag ${g?'tag-ok':'tag-no'}">${g?'✓ Tercapai':'✗ Belum'}</span></td>
     </tr>`;
   }).join('');
 
@@ -266,7 +335,6 @@ DATA.forEach(d => {
         ${good?'✓ Target 2024 Tercapai':'✗ Target 2024 Belum Tercapai'}
       </div>
     </div>
-
     <div class="stats">
       <div class="sc sc-blue">
         <div class="sc-lbl">Capaian 2024</div>
@@ -289,7 +357,6 @@ DATA.forEach(d => {
         <div class="sc-sub">capaian</div>
       </div>
     </div>
-
     <div class="chart-box">
       <div class="chart-head">
         <h3>Grafik Capaian vs Target (2021–2024)</h3>
@@ -302,16 +369,17 @@ DATA.forEach(d => {
         <canvas id="canvas-${d.id}"></canvas>
       </div>
     </div>
-
     <div class="table-box">
       <div class="table-title">Data Lengkap Per Tahun</div>
-      <table>
-        <thead><tr>
-          <th>Tahun</th><th>Capaian</th><th>Target</th>
-          <th>% Capaian</th><th>Status</th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
+      <div class="table-scroll">
+        <table>
+          <thead><tr>
+            <th>Tahun</th><th>Capaian</th><th>Target</th>
+            <th>% Capaian</th><th>Status</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
     </div>
   `;
   mainEl.appendChild(panel);
@@ -352,7 +420,7 @@ requestAnimationFrame(() => {
           tooltip: {
             backgroundColor: '#1a231a', titleColor: '#fff',
             bodyColor: 'rgba(255,255,255,.7)',
-            padding: 11, cornerRadius: 9,
+            padding: 10, cornerRadius: 8,
             titleFont: { family: 'Outfit', weight: '600', size: 12 },
             bodyFont:  { family: 'JetBrains Mono', size: 11 },
             callbacks: { label: c => `  ${c.dataset.label}: ${c.parsed.y}` }
@@ -373,6 +441,7 @@ function select(id) {
   document.querySelectorAll('.iku-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
   document.getElementById('btn-'+id).classList.add('active');
+  mobileSelect.value = id;
   if (charts[id]) charts[id].resize();
   mainEl.scrollTop = 0;
 }
