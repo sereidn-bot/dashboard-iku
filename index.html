@@ -208,11 +208,6 @@ td { padding: 10px 14px; font-size: 13px; }
 .tag-ok { background: #dcfce7; color: #15803d; }
 .tag-no { background: #fee2e2; color: #b91c1c; }
 
-/* ── HIGHLIGHT ROW 2025 ── */
-tr.row-2025 { background: #fffbeb; }
-tr.row-2025:hover { background: #fef9c3; }
-tr.row-2025 .td-y { color: var(--green-dark); font-weight: 700; }
-
 /* ── RESPONSIVE TABLET ── */
 @media (max-width: 900px) {
   .stats { grid-template-columns: repeat(2,1fr); }
@@ -363,8 +358,7 @@ DATA.forEach(d => {
   // Table rows
   const rows = YEARS.map((y, i) => {
     const c = d.c[i], t = d.t[i], g = isOk(c, t);
-    const is2025 = (y === 2025);
-    return `<tr class="${is2025 ? 'row-2025' : ''}">
+    return `<tr>
       <td class="td-y">${y}</td>
       <td class="td-c">${c}</td>
       <td class="td-t">${t}</td>
