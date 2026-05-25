@@ -32,8 +32,6 @@ html, body {
   display: flex;
   flex-direction: column;
 }
-
-/* ── TOPBAR ── */
 .topbar {
   background: var(--green-dark);
   padding: 0 20px;
@@ -53,8 +51,6 @@ html, body {
 }
 .topbar-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.9); }
 .topbar-sub  { font-size: 11px; color: rgba(255,255,255,.45); }
-
-/* ── MOBILE IKU SELECTOR ── */
 .mobile-select-wrap {
   display: none;
   background: var(--gray-0);
@@ -77,15 +73,11 @@ html, body {
   background-position: right 12px center;
   cursor: pointer;
 }
-
-/* ── LAYOUT ── */
 .layout {
   display: flex; flex: 1;
   min-height: 0;
   overflow: hidden;
 }
-
-/* ── SIDEBAR (desktop) ── */
 .sidebar {
   width: 180px; flex-shrink: 0;
   background: var(--gray-0);
@@ -122,31 +114,23 @@ html, body {
 .iku-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 .dot-ok { background: #22c55e; }
 .dot-no { background: #ef4444; }
-
-/* ── MAIN ── */
 .main {
   flex: 1; padding: 22px 24px;
   overflow-y: auto;
   display: flex; flex-direction: column; gap: 16px;
 }
-
-/* ── PANEL ── */
 .panel { display: none; flex-direction: column; gap: 16px; animation: fadeUp .22s ease; }
 .panel.active { display: flex; }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: none; }
 }
-
-/* ── PANEL HEAD ── */
 .ph { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .ph-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
 .ph-desc  { font-size: 12px; color: var(--gray-4); line-height: 1.55; }
 .badge { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; font-size: 12px; font-weight: 700; white-space: nowrap; }
 .badge-ok { background: #dcfce7; color: #15803d; }
 .badge-no { background: #fee2e2; color: #b91c1c; }
-
-/* ── STATS ── */
 .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
 .sc {
   background: var(--gray-0); border-radius: 12px;
@@ -161,8 +145,6 @@ html, body {
 .sc-val { font-size: 24px; font-weight: 700; font-family: 'JetBrains Mono', monospace; line-height: 1; }
 .sc-val-sm { font-size: 18px; }
 .sc-sub { font-size: 11px; color: var(--gray-4); margin-top: 3px; }
-
-/* ── CHART ── */
 .chart-box {
   background: var(--gray-0); border-radius: 12px;
   border: 1px solid var(--gray-2); padding: 18px 20px;
@@ -180,8 +162,6 @@ html, body {
   background: repeating-linear-gradient(to right, var(--orange) 0, var(--orange) 4px, transparent 4px, transparent 7px);
 }
 .chart-wrap { position: relative; height: 240px; }
-
-/* ── TABLE ── */
 .table-box {
   background: var(--gray-0); border-radius: 12px;
   border: 1px solid var(--gray-2); overflow: hidden;
@@ -207,35 +187,23 @@ td { padding: 10px 14px; font-size: 13px; }
 .tag { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; }
 .tag-ok { background: #dcfce7; color: #15803d; }
 .tag-no { background: #fee2e2; color: #b91c1c; }
-
-/* ── RESPONSIVE TABLET ── */
 @media (max-width: 900px) {
   .stats { grid-template-columns: repeat(2,1fr); }
 }
-
-/* ── RESPONSIVE MOBILE ── */
 @media (max-width: 640px) {
   .sidebar { display: none; }
   .mobile-select-wrap { display: block; }
   .topbar-sub { display: none; }
   .topbar-name { font-size: 12px; }
-
   .layout { overflow-y: auto; }
-  .main {
-    padding: 14px 12px;
-    overflow-y: visible;
-    flex: none;
-  }
-
+  .main { padding: 14px 12px; overflow-y: visible; flex: none; }
   .ph { flex-direction: column; gap: 10px; }
   .ph-title { font-size: 18px; }
   .badge { align-self: flex-start; }
-
   .stats { grid-template-columns: repeat(2,1fr); gap: 8px; }
   .sc { padding: 12px 12px; }
   .sc-val { font-size: 20px; }
   .sc-val-sm { font-size: 16px; }
-
   .chart-wrap { height: 200px; }
   .chart-head h3 { font-size: 12px; }
 }
@@ -251,7 +219,6 @@ td { padding: 10px 14px; font-size: 13px; }
   <div class="topbar-sub">Ditrenbang &middot; Universitas Andalas</div>
 </div>
 
-<!-- Mobile dropdown -->
 <div class="mobile-select-wrap">
   <select class="mobile-select" id="mobile-select" onchange="select(parseInt(this.value))">
   </select>
@@ -266,7 +233,6 @@ td { padding: 10px 14px; font-size: 13px; }
 </div>
 
 <script>
-// ── DATA: tambah 2025 sebagai elemen ke-5 di setiap array c[] dan t[] ──
 const YEARS = [2021, 2022, 2023, 2024, 2025];
 
 const DATA = [
@@ -274,53 +240,60 @@ const DATA = [
     id: 1,
     desc: "Persentase lulusan S1 dan D4/D3/D2 yang berhasil mendapat pekerjaan; melanjutkan studi; atau menjadi wiraswasta",
     c: [10.75, 52.27, 66.68, 60.8,  57.71],
-    t: [80,    60,    80,    80,    80   ]
+    t: [80,    60,    80,    80,    80   ],
+    unitC: '%', unitT: '%'
   },
   {
     id: 2,
     desc: "Persentase mahasiswa yang menghabiskan paling sedikit 20 SKS di luar kampus atau meraih prestasi",
     c: [1.33,  18.92, 4.22,  8.35,  3.50 ],
-    t: [30,    25,    40,    40,    40   ]
+    t: [30,    25,    40,    40,    40   ],
+    unitC: '%', unitT: '%'
   },
   {
     id: 3,
     desc: "Persentase dosen yang berkegiatan tri dharma di kampus lain, bekerja sebagai praktisi industri, atau membina mahasiswa berprestasi",
     c: [7.72,  20.49, 40.6,  59.85, 55.56],
-    t: [20,    30,    30,    32.1,  30   ]
+    t: [20,    30,    30,    32.1,  30   ],
+    unitC: '%', unitT: '%'
   },
   {
     id: 4,
     desc: "Persentase dosen yang memiliki sertifikat kompetensi/profesi yang diakui industri atau berasal dari kalangan praktisi profesional",
     c: [34.62, 28,    21.57, 31,    20.26],
-    t: [8,     5,     10,    33.33, 25   ]
+    t: [8,     5,     10,    33.33, 25   ],
+    unitC: '%', unitT: '%'
   },
   {
     id: 5,
     desc: "Jumlah keluaran penelitian dan pengabdian masyarakat yang mendapat rekognisi internasional atau diterapkan masyarakat per jumlah dosen",
     c: [2.76,  7.60,  7.26,  4.81,  2.29 ],
-    t: [0.5,   1,     1,     6,     1    ]
+    t: [0.5,   1,     1,     6,     1    ],
+    unitC: 'Rasio', unitT: 'Rasio'
   },
   {
     id: 6,
-    desc: "Persentase program studi S1 dan D4/D3/D2 yang melaksanakan kerja sama dengan mitra / jumlah kerjasama per prodi",
+    desc: "Jumlah kerjasama per program studi S1 dan D4/D3/D2",
     c: [38.35, 49.91, 5.09,  6.6,   1.14 ],
-    t: [40,    50,    25,    25,    0.7  ]
+    t: [40,    50,    25,    25,    0.7  ],
+    unitC: 'Rasio', unitT: 'Rasio'
   },
   {
     id: 7,
     desc: "Jumlah mahasiswa berprestasi di tingkat nasional dan internasional per jumlah mahasiswa / persentase matkul case method atau PjBL",
     c: [18.7,  29.21, 22,    15.33, 22.42],
-    t: [35,    50,    50,    58.1,  50   ]
+    t: [35,    50,    50,    58.1,  50   ],
+    unitC: '%', unitT: '%'
   },
   {
     id: 8,
     desc: "Persentase program studi S1 dan D4/D3/D2 yang memiliki akreditasi atau sertifikasi internasional yang diakui pemerintah",
     c: [0.35,  0.92,  0.95,  2,     33   ],
-    t: [0.5,   0.5,   0.7,   2.60,  10   ]
+    t: [0.5,   0.5,   0.7,   2.60,  10   ],
+    unitC: '%', unitT: '%'
   }
 ];
 
-// ── HELPERS ──
 function pct(c, t) { return t ? ((c / t) * 100).toFixed(1) + '%' : '—'; }
 function isOk(c, t) { return c >= t; }
 function avg(a) { return (a.reduce((x, y) => x + y, 0) / a.length).toFixed(1); }
@@ -330,14 +303,12 @@ const sidebarEl = document.getElementById('sidebar');
 const mainEl = document.getElementById('main');
 const mobileSelect = document.getElementById('mobile-select');
 
-// ── INDEX TAHUN TERBARU (2025 = indeks 4) ──
 const LAST = YEARS.length - 1;
 const LAST_YEAR = YEARS[LAST];
 
 DATA.forEach(d => {
   const cLast = d.c[LAST], tLast = d.t[LAST], good = isOk(cLast, tLast);
 
-  // Sidebar button
   const btn = document.createElement('button');
   btn.className = 'iku-btn';
   btn.id = 'btn-' + d.id;
@@ -349,13 +320,11 @@ DATA.forEach(d => {
   btn.onclick = () => select(d.id);
   sidebarEl.appendChild(btn);
 
-  // Mobile dropdown option
   const opt = document.createElement('option');
   opt.value = d.id;
   opt.textContent = `IKU ${d.id} — ${good ? '✓' : '✗'} ${good ? 'Tercapai' : 'Belum Tercapai'}`;
   mobileSelect.appendChild(opt);
 
-  // Table rows
   const rows = YEARS.map((y, i) => {
     const c = d.c[i], t = d.t[i], g = isOk(c, t);
     return `<tr>
@@ -367,7 +336,6 @@ DATA.forEach(d => {
     </tr>`;
   }).join('');
 
-  // Panel
   const panel = document.createElement('div');
   panel.className = 'panel';
   panel.id = 'panel-' + d.id;
@@ -385,12 +353,12 @@ DATA.forEach(d => {
       <div class="sc sc-blue">
         <div class="sc-lbl">Capaian ${LAST_YEAR}</div>
         <div class="sc-val">${cLast}</div>
-        <div class="sc-sub">Nilai realisasi</div>
+        <div class="sc-sub">${d.unitC}</div>
       </div>
       <div class="sc sc-orange">
         <div class="sc-lbl">Target ${LAST_YEAR}</div>
         <div class="sc-val">${tLast}</div>
-        <div class="sc-sub">Nilai ditetapkan</div>
+        <div class="sc-sub">${d.unitT}</div>
       </div>
       <div class="sc sc-green">
         <div class="sc-lbl">% Capaian ${LAST_YEAR}</div>
@@ -431,7 +399,6 @@ DATA.forEach(d => {
   mainEl.appendChild(panel);
 });
 
-// ── BUILD CHARTS ──
 requestAnimationFrame(() => {
   DATA.forEach(d => {
     const el = document.getElementById('canvas-' + d.id);
@@ -445,8 +412,7 @@ requestAnimationFrame(() => {
             label: 'Capaian', data: d.c,
             borderColor: '#1a56db', backgroundColor: 'rgba(26,86,219,.07)',
             borderWidth: 2.5, pointRadius: 5, pointHoverRadius: 7,
-            pointBackgroundColor: d.c.map((_, i) => i === LAST ? '#1a56db' : '#fff'),
-            pointBorderColor: '#1a56db',
+            pointBackgroundColor: '#fff', pointBorderColor: '#1a56db',
             pointBorderWidth: 2.5, tension: 0.3, fill: true
           },
           {
