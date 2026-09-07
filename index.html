@@ -51,6 +51,92 @@ html, body {
 }
 .topbar-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.9); }
 .topbar-sub  { font-size: 11px; color: rgba(255,255,255,.45); }
+.view-tabs {
+  display: flex; gap: 2px; background: var(--gray-0);
+  border-bottom: 1px solid var(--gray-2); padding: 8px 20px 0;
+  flex-shrink: 0;
+}
+.view-tab {
+  font-family: 'Outfit', sans-serif; font-size: 12.5px; font-weight: 600;
+  color: var(--gray-5); background: transparent; border: none;
+  padding: 9px 16px; border-radius: 8px 8px 0 0; cursor: pointer;
+  border-bottom: 2.5px solid transparent; transition: color .15s, background .15s;
+}
+.view-tab:hover { background: var(--green-light); color: var(--green-dark); }
+.view-tab.active { color: var(--green-dark); border-bottom-color: var(--green-dark); background: var(--green-light); }
+.view { display: none; flex: 1; min-height: 0; overflow: hidden; flex-direction: column; }
+.view.active { display: flex; }
+.sasaran-label {
+  font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px;
+  color: var(--green-main); padding: 12px 8px 4px; border-top: 1px solid var(--gray-2); margin-top: 4px;
+}
+.sasaran-label:first-child { border-top: none; margin-top: 0; }
+.badge-neutral { background: var(--gray-2); color: var(--gray-5); }
+.tag-neutral { background: var(--gray-2); color: var(--gray-5); }
+.dot-neutral { background: var(--gray-4); }
+.chart-delta {
+  margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--gray-2);
+  font-size: 12.5px; color: var(--gray-5); text-align: center; font-weight: 500;
+}
+.chart-delta b { font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+.delta-up { color: #15803d; }
+.delta-down { color: #b91c1c; }
+.delta-flat { color: var(--gray-5); }
+.source-bar {
+  background: var(--green-light); border-bottom: 1px solid var(--gray-2);
+  padding: 8px 20px; font-size: 11.5px; color: var(--gray-5); font-weight: 600;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap; flex-shrink: 0;
+}
+.source-bar a {
+  color: var(--green-dark); text-decoration: none; font-weight: 700;
+  padding: 3px 10px; background: var(--gray-0); border-radius: 20px;
+  border: 1px solid var(--gray-2); transition: background .15s, border-color .15s;
+}
+.source-bar a:hover { background: var(--yellow); border-color: var(--yellow); }
+.history-btn {
+  font-family: 'Outfit', sans-serif; font-size: 11.5px; font-weight: 600;
+  color: rgba(255,255,255,.85); background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.18); border-radius: 20px;
+  padding: 5px 12px; cursor: pointer; transition: background .15s;
+}
+.history-btn:hover { background: rgba(255,255,255,.2); }
+.history-modal {
+  position: fixed; inset: 0; z-index: 999; display: none;
+  align-items: center; justify-content: center; padding: 20px;
+  background: rgba(26,35,26,.55); backdrop-filter: blur(3px);
+}
+.history-modal.open { display: flex; }
+.history-box {
+  background: var(--gray-0); border-radius: 16px; max-width: 480px; width: 100%;
+  max-height: 84vh; overflow-y: auto; padding: 26px 26px 20px; position: relative;
+  box-shadow: 0 30px 60px -20px rgba(11,61,34,.4);
+}
+.history-close {
+  position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; border: none;
+  background: var(--gray-2); border-radius: 50%; cursor: pointer; font-size: 17px;
+  color: var(--green-dark); line-height: 1; display: flex; align-items: center; justify-content: center;
+}
+.history-title { font-size: 17px; font-weight: 700; color: var(--green-dark); margin-bottom: 4px; }
+.history-sub { font-size: 12px; color: var(--gray-4); margin-bottom: 20px; }
+.history-timeline { position: relative; padding-left: 22px; border-left: 2px solid var(--gray-2); }
+.history-item { position: relative; margin-bottom: 20px; }
+.history-item:last-child { margin-bottom: 0; }
+.history-dot {
+  position: absolute; left: -27.5px; top: 3px; width: 11px; height: 11px;
+  border-radius: 50%; background: var(--green-main); border: 2px solid var(--gray-0);
+  box-shadow: 0 0 0 2px var(--green-main);
+}
+.history-tag {
+  display: inline-block; font-size: 9.5px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--green-dark); background: var(--green-light);
+  padding: 2px 9px; border-radius: 20px; margin-bottom: 5px;
+}
+.history-desc { font-size: 12.5px; color: var(--text); line-height: 1.55; }
+.history-desc b { color: var(--green-dark); }
+.history-footnote {
+  margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--gray-2);
+  font-size: 10.5px; color: var(--gray-4); text-align: right; font-style: italic;
+}
 .mobile-select-wrap {
   display: none;
   background: var(--gray-0);
@@ -216,9 +302,18 @@ td { padding: 10px 14px; font-size: 13px; }
     <div class="topbar-logo">U</div>
     <span class="topbar-name">Dashboard Capaian IKU 2021&ndash;2025</span>
   </div>
-  <div class="topbar-sub">Ditrenbang &middot; Universitas Andalas</div>
+  <div style="display:flex; align-items:center; gap:14px;">
+    <button class="history-btn" onclick="openHistory()">🕘 Riwayat</button>
+    <div class="topbar-sub">Ditrenbang &middot; Universitas Andalas</div>
+  </div>
 </div>
 
+<div class="view-tabs">
+  <button class="view-tab active" id="tab-old" onclick="switchView('old')">IKU 2021&ndash;2025</button>
+  <button class="view-tab" id="tab-new" onclick="switchView('new')">Indikator Kinerja 2026 (Baru)</button>
+</div>
+
+<div class="view active" id="view-old">
 <div class="mobile-select-wrap">
   <select class="mobile-select" id="mobile-select" onchange="select(parseInt(this.value))">
   </select>
@@ -230,6 +325,66 @@ td { padding: 10px 14px; font-size: 13px; }
     <div id="sidebar"></div>
   </aside>
   <main class="main" id="main"></main>
+</div>
+</div>
+
+<div class="view" id="view-new">
+<div class="source-bar">
+  Sumber data:
+  <a href="sumber/Capai_tw_1_2026_SPEKTA.pdf" target="_blank" rel="noopener">📄 Laporan Kinerja TW I 2026 (PDF)</a>
+  <a href="sumber/Capai_tw_2_2026_SPEKTA.pdf" target="_blank" rel="noopener">📄 Laporan Kinerja TW II 2026 (PDF)</a>
+</div>
+<div class="mobile-select-wrap">
+  <select class="mobile-select" id="mobile-select-2026" onchange="select2026(this.value)">
+  </select>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-label">Sasaran &amp; Indikator</div>
+    <div id="sidebar-2026"></div>
+  </aside>
+  <main class="main" id="main-2026"></main>
+</div>
+</div>
+
+<div class="history-modal" id="historyModal">
+  <div class="history-box">
+    <button class="history-close" onclick="closeHistory()" aria-label="Tutup">&times;</button>
+    <h2 class="history-title">Riwayat Perkembangan Dashboard</h2>
+    <p class="history-sub">Catatan perubahan dashboard ini dari waktu ke waktu.</p>
+    <div class="history-timeline">
+      <div class="history-item">
+        <div class="history-dot"></div>
+        <div class="history-content">
+          <div class="history-tag">Versi Awal</div>
+          <div class="history-desc">Data <b>Capaian IKU 2021&ndash;2025</b> hanya tersedia sebagai <b>link download dokumen PDF</b>, belum dalam bentuk dashboard interaktif.</div>
+        </div>
+      </div>
+      <div class="history-item">
+        <div class="history-dot"></div>
+        <div class="history-content">
+          <div class="history-tag">Penambahan</div>
+          <div class="history-desc">Dokumen PDF tersebut diubah menjadi <b>dashboard interaktif Capaian IKU 2021&ndash;2025</b> (8 indikator, format Kepmendikbudristek) dengan grafik, tabel, dan navigasi per indikator.</div>
+        </div>
+      </div>
+      <div class="history-item">
+        <div class="history-dot"></div>
+        <div class="history-content">
+          <div class="history-tag">Penambahan</div>
+          <div class="history-desc">Ditambahkan tab baru <b>Indikator Kinerja 2026</b> berisi 16 indikator dari format Ditjen Dikti (Sasaran S1&ndash;S4), dengan data Triwulan I dan Triwulan II 2026, terpisah dari 8 IKU lama karena definisi indikatornya berbeda.</div>
+        </div>
+      </div>
+      <div class="history-item">
+        <div class="history-dot"></div>
+        <div class="history-content">
+          <div class="history-tag">Penambahan</div>
+          <div class="history-desc">Ditambahkan tautan <b>sumber data</b> pada tab Indikator Kinerja 2026, mengarah ke dokumen resmi Laporan Kinerja Triwulan I dan Triwulan II 2026.</div>
+        </div>
+      </div>
+    </div>
+    <p class="history-footnote">Diperbarui oleh: Mutia Rahmi, September 2026</p>
+  </div>
 </div>
 
 <script>
@@ -455,6 +610,317 @@ requestAnimationFrame(() => {
   });
   select(1);
 });
+
+const DATA2026 = [
+  { id:'1.1', sasaran:'S1', sasaranLabel:'Talenta',
+    desc:'Angka Efisiensi Edukasi perguruan tinggi (AEE PT)',
+    unit:'%', targetPK:87.53,
+    tw1:{target:9.25, realisasi:9.12}, tw2:{target:32.5, realisasi:81.71} },
+  { id:'1.2', sasaran:'S1', sasaranLabel:'Talenta',
+    desc:'Persentase lulusan D1/D2/D3/D4/S1 yang langsung bekerja, berwirausaha, atau melanjutkan studi dalam 1 tahun setelah kelulusan',
+    unit:'%', targetPK:60,
+    tw1:{target:10, realisasi:10.31}, tw2:{target:30, realisasi:41.35} },
+  { id:'1.3', sasaran:'S1', sasaranLabel:'Talenta',
+    desc:'Persentase mahasiswa program Diploma dan Sarjana yang berkegiatan/meraih prestasi di luar program studi',
+    unit:'%', targetPK:30,
+    tw1:{target:5, realisasi:2.2}, tw2:{target:10, realisasi:8.88} },
+  { id:'2.1', sasaran:'S2', sasaranLabel:'Inovasi',
+    desc:'Persentase Dosen perguruan tinggi yang mendapatkan rekognisi internasional atau hasil penelitiannya diterapkan oleh masyarakat',
+    unit:'%', targetPK:67,
+    tw1:{target:20, realisasi:13}, tw2:{target:30, realisasi:57.14} },
+  { id:'2.2', sasaran:'S2', sasaranLabel:'Inovasi',
+    desc:'Persentase luaran hasil kerja sama dan hilirisasi antara perguruan tinggi dengan industri/lembaga',
+    unit:'%', targetPK:5,
+    tw1:{target:1, realisasi:0.58}, tw2:{target:2, realisasi:2.75} },
+  { id:'2.3', sasaran:'S2', sasaranLabel:'Inovasi',
+    desc:'Persentase publikasi bereputasi internasional (Scopus/WoS)',
+    unit:'%', targetPK:57.78,
+    tw1:{target:12, realisasi:10.17}, tw2:{target:25, realisasi:74.58} },
+  { id:'3.1', sasaran:'S3', sasaranLabel:'Kontribusi/Dedikasi pada Masyarakat',
+    desc:'Persentase keterlibatan perguruan tinggi dalam SDG 1, SDG 4, SDG 17, dan 2 SDGs lain sesuai keunggulan',
+    unit:'%', targetPK:80,
+    tw1:{target:20, realisasi:4.8}, tw2:{target:40, realisasi:45.59} },
+  { id:'3.2', sasaran:'S3', sasaranLabel:'Kontribusi/Dedikasi pada Masyarakat',
+    desc:'Persentase Sumber Daya Manusia (SDM) perguruan tinggi yang terlibat langsung dalam penyusunan kebijakan (nasional/daerah/industri)',
+    unit:'%', targetPK:25,
+    tw1:{target:5, realisasi:0.7}, tw2:{target:10, realisasi:1.97} },
+  { id:'4.1', sasaran:'S4', sasaranLabel:'Tata Kelola Berintegritas',
+    desc:'Persentase pendapatan/penghasilan dari bidang nonakademik (selain UKT/uang kuliah)',
+    unit:'%', targetPK:30,
+    tw1:{target:5, realisasi:13.84}, tw2:{target:20, realisasi:40.04} },
+  { id:'4.2', sasaran:'S4', sasaranLabel:'Tata Kelola Berintegritas',
+    desc:'Zona Integritas (Wilayah Bebas dari Korupsi/WBK dan Wilayah Birokrasi Bersih Melayani/WBBM)',
+    unit:'Unit Kerja', targetPK:2,
+    tw1:{target:0, realisasi:0}, tw2:{target:0, realisasi:0} },
+  { id:'4.3.a', sasaran:'S4', sasaranLabel:'Tata Kelola Berintegritas',
+    desc:'Hasil audit atas Laporan Keuangan perguruan tinggi',
+    unit:'Opini', targetPK:'WTP',
+    tw1:{target:'-', realisasi:'-'}, tw2:{target:'-', realisasi:'WTP'} },
+  { id:'4.3.b', sasaran:'S4', sasaranLabel:'Tata Kelola Berintegritas',
+    desc:'Predikat Sistem Akuntabilitas Kinerja Instansi Pemerintah (SAKIP) Perguruan Tinggi',
+    unit:'Predikat', targetPK:'A',
+    tw1:{target:'-', realisasi:'-'}, tw2:{target:'-', realisasi:'A'} },
+  { id:'4.3.c', sasaran:'S4', sasaranLabel:'Tata Kelola Berintegritas',
+    desc:'Pencegahan dan Penanganan Pelanggaran Integritas Akademik',
+    unit:'Laporan', targetPK:0,
+    tw1:{target:0, realisasi:0}, tw2:{target:0, realisasi:0} },
+  { id:'4.3.d', sasaran:'S4', sasaranLabel:'Tata Kelola Berintegritas',
+    desc:'Pencegahan dan Penanganan Anti Kekerasan; Anti Narkotika, Psikotropika dan Bahan Adiktif (Narkoba); dan Anti Korupsi',
+    unit:'%', targetPK:100,
+    tw1:{target:100, realisasi:25}, tw2:{target:100, realisasi:50} },
+  { id:'4.4', sasaran:'S4', sasaranLabel:'Tata Kelola Berintegritas',
+    desc:'Ketersediaan perencanaan strategis peningkatan kesejahteraan dosen',
+    unit:'Dokumen', targetPK:1,
+    tw1:{target:0, realisasi:0}, tw2:{target:0, realisasi:1} },
+  { id:'4.5', sasaran:'S4', sasaranLabel:'Tata Kelola Berintegritas',
+    desc:'Nilai Kinerja Anggaran atas Pelaksanaan RKA-K/L',
+    unit:'Nilai', targetPK:87.38,
+    tw1:{target:25, realisasi:24.63}, tw2:{target:40, realisasi:39.6} }
+];
+
+function isNum(v){ return typeof v === 'number'; }
+function statusOf(d){
+  const r = d.tw2.realisasi, t = d.tw2.target;
+  if (r === '-' ) return 'neutral';
+  if (isNum(r) && isNum(t)) return r >= t ? 'ok' : 'no';
+  if (!isNum(r) && !isNum(d.targetPK)) return r === d.targetPK ? 'ok' : 'no';
+  return 'neutral';
+}
+function pct2026(r, t){
+  if (!isNum(r) || !isNum(t) || !t) return '—';
+  return ((r / t) * 100).toFixed(1) + '%';
+}
+
+const charts2026 = {};
+const sidebar2026El = document.getElementById('sidebar-2026');
+const main2026El = document.getElementById('main-2026');
+const mobileSelect2026 = document.getElementById('mobile-select-2026');
+
+let lastSasaran = null;
+DATA2026.forEach(d => {
+  const status = statusOf(d);
+  const dotClass = status === 'ok' ? 'dot-ok' : status === 'no' ? 'dot-no' : 'dot-neutral';
+  const badgeClass = status === 'ok' ? 'badge-ok' : status === 'no' ? 'badge-no' : 'badge-neutral';
+  const tagClass = status === 'ok' ? 'tag-ok' : status === 'no' ? 'tag-no' : 'tag-neutral';
+  const statusText = status === 'ok' ? '✓ Tercapai (TW II)' : status === 'no' ? '✗ Belum (TW II)' : 'Bersifat Tahunan';
+
+  if (d.sasaran !== lastSasaran) {
+    const lbl = document.createElement('div');
+    lbl.className = 'sasaran-label';
+    lbl.textContent = '[' + d.sasaran + '] ' + d.sasaranLabel;
+    sidebar2026El.appendChild(lbl);
+    lastSasaran = d.sasaran;
+  }
+
+  const btn = document.createElement('button');
+  btn.className = 'iku-btn';
+  btn.id = 'btn2026-' + d.id;
+  btn.innerHTML = `
+    <div class="iku-txt">IKU ${d.id}</div>
+    <div class="iku-dot ${dotClass}"></div>
+  `;
+  btn.onclick = () => select2026(d.id);
+  sidebar2026El.appendChild(btn);
+
+  const opt = document.createElement('option');
+  opt.value = d.id;
+  opt.textContent = `IKU ${d.id} — ${statusText}`;
+  mobileSelect2026.appendChild(opt);
+
+  const rows = `
+    <tr>
+      <td class="td-y">TW I 2026</td>
+      <td class="td-c">${d.tw1.realisasi}</td>
+      <td class="td-t">${d.tw1.target}</td>
+      <td class="td-p">${pct2026(d.tw1.realisasi, d.tw1.target)}</td>
+    </tr>
+    <tr>
+      <td class="td-y">TW II 2026</td>
+      <td class="td-c">${d.tw2.realisasi}</td>
+      <td class="td-t">${d.tw2.target}</td>
+      <td class="td-p">${pct2026(d.tw2.realisasi, d.tw2.target)}</td>
+    </tr>
+  `;
+
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+  panel.id = 'panel2026-' + d.id;
+  panel.innerHTML = `
+    <div class="ph">
+      <div>
+        <div class="ph-title">IKU ${d.id} <span style="font-size:11px;color:var(--gray-4);font-weight:500;">[${d.sasaran}] ${d.sasaranLabel}</span></div>
+        <div class="ph-desc">${d.desc}</div>
+      </div>
+      <div class="badge ${badgeClass}">${statusText}</div>
+    </div>
+    <div class="stats">
+      <div class="sc sc-blue">
+        <div class="sc-lbl">Realisasi TW II 2026</div>
+        <div class="sc-val sc-val-sm">${d.tw2.realisasi}</div>
+        <div class="sc-sub">${d.unit}</div>
+      </div>
+      <div class="sc sc-orange">
+        <div class="sc-lbl">Target TW II 2026</div>
+        <div class="sc-val sc-val-sm">${d.tw2.target}</div>
+        <div class="sc-sub">${d.unit}</div>
+      </div>
+      <div class="sc sc-green">
+        <div class="sc-lbl">% Capaian TW II</div>
+        <div class="sc-val sc-val-sm" style="color:${status === 'ok' ? '#15803d' : status === 'no' ? '#b91c1c' : 'var(--gray-5)'}">${pct2026(d.tw2.realisasi, d.tw2.target)}</div>
+        <div class="sc-sub">dari target TW</div>
+      </div>
+      <div class="sc sc-yellow">
+        <div class="sc-lbl">Target Tahunan (PK) 2026</div>
+        <div class="sc-val sc-val-sm">${d.targetPK}</div>
+        <div class="sc-sub">${d.unit}</div>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-head">
+        <h3>Perbandingan TW I vs TW II 2026</h3>
+        <div class="legend">
+          <div class="leg"><div class="leg-line"></div>Realisasi</div>
+          <div class="leg"><div class="leg-dash"></div>Target TW</div>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="canvas2026-${d.id}"></canvas>
+      </div>
+      <div class="chart-delta" id="delta2026-${d.id}"></div>
+    </div>
+    <div class="table-box">
+      <div class="table-title">Data Lengkap Per Triwulan</div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr>
+            <th>Periode</th><th>Realisasi</th><th>Target TW</th><th>% Capaian</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+  main2026El.appendChild(panel);
+});
+
+const valueLabelPlugin = {
+  id: 'valueLabelPlugin',
+  afterDatasetsDraw(chart){
+    const { ctx } = chart;
+    chart.data.datasets.forEach((dataset, di) => {
+      const meta = chart.getDatasetMeta(di);
+      if (meta.hidden) return;
+      meta.data.forEach((bar, i) => {
+        const val = dataset.data[i];
+        if (val === null || val === undefined) return;
+        ctx.save();
+        ctx.font = "700 11px 'JetBrains Mono', monospace";
+        ctx.fillStyle = di === 0 ? '#1a56db' : '#d04a00';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = di === 0 ? 'bottom' : 'top';
+        ctx.fillText(val, bar.x, bar.y + (di === 0 ? -6 : 8));
+        ctx.restore();
+      });
+    });
+  }
+};
+
+function fmtDeltaVal(v){ return Number.isInteger(v) ? v : v.toFixed(2); }
+
+function renderDelta2026(d){
+  const el = document.getElementById('delta2026-' + d.id);
+  if (!el) return;
+  const r1 = d.tw1.realisasi, r2 = d.tw2.realisasi;
+  if (!isNum(r1) || !isNum(r2)) {
+    el.innerHTML = 'Indikator ini bersifat tahunan &mdash; realisasi TW I belum tersedia untuk dibandingkan.';
+    return;
+  }
+  const diff = r2 - r1;
+  const cls = diff > 0 ? 'delta-up' : diff < 0 ? 'delta-down' : 'delta-flat';
+  const arrow = diff > 0 ? '&#9650;' : diff < 0 ? '&#9660;' : '&#8226;';
+  el.innerHTML = `Realisasi <b>${fmtDeltaVal(r1)}${d.unit === '%' ? '%' : ''}</b> (TW I) &rarr; <b>${fmtDeltaVal(r2)}${d.unit === '%' ? '%' : ''}</b> (TW II) &mdash; <span class="${cls}">${arrow} ${diff > 0 ? 'naik' : diff < 0 ? 'turun' : 'tetap'} ${fmtDeltaVal(Math.abs(diff))}${d.unit === '%' ? ' poin' : ''}</span>`;
+}
+
+function buildChart2026(d){
+  const el = document.getElementById('canvas2026-' + d.id);
+  if (!el || charts2026[d.id]) { renderDelta2026(d); return; }
+  const rNums = [d.tw1.realisasi, d.tw2.realisasi].map(v => isNum(v) ? v : null);
+  const tNums = [d.tw1.target, d.tw2.target].map(v => isNum(v) ? v : null);
+  charts2026[d.id] = new Chart(el.getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: ['TW I 2026', 'TW II 2026'],
+      datasets: [
+        {
+          label: 'Realisasi', data: rNums,
+          borderColor: '#1a56db', backgroundColor: 'rgba(26,86,219,.07)',
+          borderWidth: 2.5, pointRadius: 5, pointHoverRadius: 7,
+          pointBackgroundColor: '#fff', pointBorderColor: '#1a56db',
+          pointBorderWidth: 2.5, tension: 0.3, fill: true
+        },
+        {
+          label: 'Target TW', data: tNums,
+          borderColor: '#d04a00', backgroundColor: 'transparent',
+          borderWidth: 2, borderDash: [6, 4],
+          pointRadius: 4, pointHoverRadius: 6,
+          pointBackgroundColor: '#fff', pointBorderColor: '#d04a00',
+          pointBorderWidth: 2, tension: 0.3, fill: false
+        }
+      ]
+    },
+    plugins: [valueLabelPlugin],
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      layout: { padding: { top: 18, bottom: 10 } },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a231a', titleColor: '#fff', bodyColor: 'rgba(255,255,255,.7)',
+          padding: 10, cornerRadius: 8,
+          titleFont: { family: 'Outfit', weight: '600', size: 12 },
+          bodyFont: { family: 'JetBrains Mono', size: 11 },
+          callbacks: { label: c => `  ${c.dataset.label}: ${c.parsed.y}` }
+        }
+      },
+      scales: {
+        x: { grid: { color: '#eef0ee' }, ticks: { font: { family: 'JetBrains Mono', size: 11 }, color: '#9aaa9a' } },
+        y: { grid: { color: '#eef0ee' }, ticks: { font: { family: 'JetBrains Mono', size: 11 }, color: '#9aaa9a' }, beginAtZero: true }
+      }
+    }
+  });
+  renderDelta2026(d);
+}
+
+function select2026(id){
+  document.querySelectorAll('#main-2026 .panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#sidebar-2026 .iku-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel2026-' + id).classList.add('active');
+  document.getElementById('btn2026-' + id).classList.add('active');
+  mobileSelect2026.value = id;
+  const d = DATA2026.find(x => x.id === id);
+  buildChart2026(d);
+  if (charts2026[id]) charts2026[id].resize();
+  main2026El.scrollTop = 0;
+}
+
+function openHistory(){ document.getElementById('historyModal').classList.add('open'); }
+function closeHistory(){ document.getElementById('historyModal').classList.remove('open'); }
+document.getElementById('historyModal').addEventListener('click', function(e){
+  if (e.target === this) closeHistory();
+});
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeHistory(); });
+
+function switchView(view){
+  document.getElementById('tab-old').classList.toggle('active', view === 'old');
+  document.getElementById('tab-new').classList.toggle('active', view === 'new');
+  document.getElementById('view-old').classList.toggle('active', view === 'old');
+  document.getElementById('view-new').classList.toggle('active', view === 'new');
+  if (view === 'new' && !DATA2026.__inited) {
+    DATA2026.__inited = true;
+    select2026('1.1');
+  }
+}
 
 function select(id) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
